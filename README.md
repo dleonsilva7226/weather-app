@@ -9,8 +9,5 @@ Currently, two official plugins are available:
 
 
 
-Reminder:
----
-
-Write Documentation
+Reminder: Write Documentation
 ---
