@@ -1,0 +1,69 @@
+.weatherHeader {
+    background: linear-gradient(0deg,#d8eeee,#d8eeee 25%,#64b3c9 65%,#005986 90%,#005986);
+    box-sizing: border-box;
+    /* width: auto; */
+    height: 1000px;
+}
+
+/* * {
+    background: linear-gradient(0deg,#d8eeee,#d8eeee 25%,#64b3c9 65%,#005986 90%,#005986);
+    box-sizing: border-box;
+    height: 500px;
+} */
+
+
+.searchBox {
+    background: linear-gradient(0deg ,#005986 90%,#005986);
+    border-radius: 10px;
+    width: 300px;
+    height: 50px;
+    flex: 0 0 auto;
+    /* font-weight: bold; */
+    font-size: xx-large;
+    text-align: center;
+    color: white;
+    /* border: 2px solid linear-gradient(0deg ,#005986 90%,#005986); */
+}
+
+
+.getWeatherButton {
+    border-radius: 10px;
+    width: 50px;
+    height: 50px;
+    flex: 0 0 auto;
+    /* border: 2px solid linear-gradient(0deg ,#005986 90%,#005986); */
+    background: linear-gradient(0deg ,#005986 90%,#005986);
+}
+
+
+.headerInfo {
+    padding: 50px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+
+.weatherInfo {
+    padding: 20px;
+    width: 300px;
+    height: 700px;
+    display: flex;
+    flex: 0 0 auto;
+    background: linear-gradient(0deg,#64b3c9 65%,#005986 90%,#005986);
+    /* border-width: 10px;
+    border-color: black; */
+    border-radius: 15px;
+    flex-direction: column;
+    align-items: center;
+    /* align-items: center;
+    justify-content: ; */
+    gap: 20px;
+    font-size: xx-large;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: white;
+
+}
+/* "dawnTime", "midMorningTime", "midAfternoonTime", "earlyEveningTime", "midEveningTime", "midnightTime" */
+
+

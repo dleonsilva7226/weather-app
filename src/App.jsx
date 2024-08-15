@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './styles.css';
 
 export default function App () {
   //API KEYS
@@ -7,15 +10,34 @@ export default function App () {
   const defaultQueryURL = `https://api.openweathermap.org/data/2.5/weather?q=London&appid=${weatherAPIKey}`;
   const [inputVal, setInputVal] = useState('');
   const [weatherVal, setWeatherVal] = useState('');
+  const [countryName, setCountryName] = useState('');
   const [weatherAtLocationVal, setWeatherAtLocationVal] = useState('');
+  const [cityName, setCityName] = useState('');
   // const [handledLocationRequestVal, setHandledLocationRequestVal] = useState('');
   const [currentLatitudeVal, setLatitudeVal] = useState('');
   const [currentLongitudeVal, setLongitudeVal] = useState('');
+  const backgroundClassesArr = ["dawnTime", "midMorningTime", "midAfternoonTime", "earlyEveningTime", "midEveningTime", "midnightTime"];
+
+  return (
+    <div className = "weatherHeader">
+      <div className = "headerInfo">
+        <input type = "text" value = {inputVal} className = "searchBox" onChange={handleInputValue}/>
+        <button onClick = {handleClick} className = "getWeatherButton">{`🔍`}</button>
+      </div>
+       {/* <p className = "locationWeather">Weather at Location: {weatherAtLocationVal}</p> */}
+      <div className = "weatherInfo">
+        <p className = "cityName">City: {cityName}</p>
+        <p className = "cityWeather">Weather: {weatherVal}</p>
+        <p className = "countryName">Country: {countryName}</p>
+       </div>
+     </div>
+  );
 
   function handleClick () {
     setWeatherVal('');
-
-    //Function that Cause Errors Below
+    setCountryName('');
+    setCityName('');
+    //DO THIS LATER
     // getCurrentLocationWeather(); 
     getSearchedWeather(); 
   }
@@ -26,10 +48,12 @@ export default function App () {
   }
   
   async function success(pos) {
-    console.log("Working");
     const crds = pos.coords;
-    setLatitudeVal(`${crds.latitude}`);
-    setLongitudeVal(`${crds.longitude}`);
+    const latitude = await crds.latitude;
+    const longitude = await crds.longitude;
+    setLatitudeVal(latitude);
+    setLongitudeVal(longitude);
+    console.log(`${latitude}, ${longitude}`);
     console.log(`${currentLatitudeVal}, ${currentLongitudeVal}`);
   }
 
@@ -37,43 +61,45 @@ export default function App () {
   //SOMETHING IS WRONG HERE BELOW. CHECK IT OUT: Location takes a bit of time to get. Erase the try statement 
   //Look at Brocode course and attempt to solve the issue
   async function getCurrentLocationWeather () {
-    navigator.geolocation.getCurrentPosition(await success, await error);
-    try {
-    let queryURL = `https://api.openweathermap.org/data/3.0/onecall?lat=${currentLatitudeVal}&lon=${currentLongitudeVal}&appid=${weatherAPIKey}`;
+    
+    // navigator.geolocation.getCurrentPosition(success, error);
+
+    // try {
+      // let queryURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${-0.1257}&lon=${51.5085}&appid=${weatherAPIKey}`;
+
+    let queryURL = `https://api.openweathermap.org/data/3.0/onecall?lat=${-0.1257}&lon=${51.5085}&appid=${weatherAPIKey}`;
 
     const weatherResult = await fetchData(queryURL);
     if (weatherResult !== undefined) {
       setWeatherAtLocationVal(weatherResult + " F");
     }
-    }
-    catch (error){
-      console.log("Not Good");
-    }
+    // }
+    // catch (error){
+    //   console.log("Not Good");
+    // }
   }
 
   //SOMETHING IS WRONG HERE ABOVE. CHECK IT OUT: Location takes a bit of time to get. Erase the try statement 
   //Look at Brocode course in JavaScript for promises and api fetching and attempt to solve the issue
 
+
+
+
+
   async function getSearchedWeather() {
-    let queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${inputVal}&appid=${weatherAPIKey}`;
+    let queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${inputVal}&appid=${weatherAPIKey}&units=imperial`;
     const weatherResult = await fetchData(queryURL);
     if (weatherResult !== undefined) {
       setWeatherVal(weatherResult + " F");
+    } else {
+      setWeatherVal("No Results Found");
+      setCountryName("No Results Found");
     }
   }
 
   function handleInputValue(event) {
     setInputVal(event.target.value);
   }
-  
-  return (
-    <div className = "weatherHeader">
-      <input type = "text" value = {inputVal} onChange={handleInputValue}/>
-       <p className = "locationWeather">Weather at Location: {weatherAtLocationVal}</p>
-       <p className = "cityWeather">Weather: {weatherVal}</p>
-       <button onClick = {handleClick}>Click Me to Get Weather</button>
-     </div>
-  );
 
   //Fetches Weather Based on Provided Query
   async function fetchData (queryURL) {
@@ -87,10 +113,15 @@ export default function App () {
       console.log(data);
       console.log();
       console.log(data.main.temp);
-      let fahrenheitTemp = (data.main.temp - 273.15) * 9/5 + 32;
-      return Math.round(fahrenheitTemp);
+      // let fahrenheitTemp = (data.main.temp - 273.15) * 9/5 + 32;
+      setCountryName(data.sys.country);
+      setCityName(data.name);
+      return Math.round(data.main.temp);
     } catch (error) {
       console.error(`Error: ${error}`);
     }
   }
+
 }
+// const root = ReactDOM.createRoot(document.getElementById("root"));
+// root.render(<App />);
