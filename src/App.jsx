@@ -19,10 +19,11 @@ export default function App () {
   const [overallWeather, setOverallWeather] = useState('');
   const [humidity, setHumidity] = useState('');
   const [windSpeed, setWindSpeed] = useState('');
-  const [timeZone, setTimeZone] = useState();
+  const [timeZone, setTimeZone] = useState('');
   const backgroundClassesArr = ["dawnTime", "midMorningTime", "midAfternoonTime", "earlyEveningTime", "midEveningTime", "midnightTime"];
-  const backgroundTimezoneColorsArr = [];
 
+
+  //Have the city also be identifiable by Country
   return (
       <div className = "weatherHeader">
         <div className = "headerContainer">
@@ -140,9 +141,40 @@ export default function App () {
   }
 
   function setTimeBackground(data) {
+    // const now = new Date();
+    // const utcString = now.toUTCString();
+    // const timeAheadOfGMT = utcString.getHours() + (data.timezone/3600);
+    // const d = new Date();
     const now = new Date();
-    const utcString = now.toUTCString();
-    console.log(utcString);
+    let utcHours = now.getUTCHours();
+    console.log(utcHours);
+    if (utcHours + data.timezone/3600 < 0) {
+      utcHours += 24;
+    }
+    console.log(utcHours);
+    // console.log(newVar);
+// const utcTime = now.toISOString();
+// console.log(utcTime + "hello");
+    // if (utcHours < 0) {
+    //   utcHours *= -1;
+    // }
+    const currentHour = utcHours + (data.timezone/3600);
+    console.log(currentHour);
+    if (currentHour >= 18 && currentHour <= 20) {
+      setTimeZone(backgroundClassesArr[3]);
+    } else if (currentHour >= 21 && currentHour <= 23) {
+      setTimeZone(backgroundClassesArr[4]);
+    } else if (currentHour >= 0 && currentHour <= 5) {
+      setTimeZone(backgroundClassesArr[5]);
+    } else if (currentHour >= 6 && currentHour <= 7) {
+      setTimeZone(backgroundClassesArr[0]);
+    } else if (currentHour >= 8 && currentHour <= 11) {
+      setTimeZone(backgroundClassesArr[1]);
+    } else if (currentHour >= 12 && currentHour <= 17) {
+      setTimeZone(backgroundClassesArr[2]);
+    }
+
+    // console.log(utcString);
   }
 
 }
