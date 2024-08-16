@@ -2,7 +2,13 @@
     background: linear-gradient(0deg,#d8eeee,#d8eeee 25%,#64b3c9 65%,#005986 90%,#005986);
     box-sizing: border-box;
     /* width: auto; */
-    height: 1000px;
+    /* height: 1000px; */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+    /* align-items: flex-start; */
+    /* flex-direction: column; */
 }
 
 /* * {
@@ -37,33 +43,79 @@
 
 
 .headerInfo {
-    padding: 50px;
+    /* padding: 50px; */
     display: flex;
-    gap: 20px;
+    gap: 30px;
+    align-items: baseline;
     justify-content: center;
 }
 
 
 .weatherInfo {
     padding: 20px;
-    width: 300px;
+    /* width: 300px; */
     height: 700px;
+    width: 300px;
     display: flex;
     flex: 0 0 auto;
     background: linear-gradient(0deg,#64b3c9 65%,#005986 90%,#005986);
     /* border-width: 10px;
     border-color: black; */
     border-radius: 15px;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
     flex-direction: column;
     align-items: center;
     /* align-items: center;
     justify-content: ; */
-    gap: 20px;
+    gap: 5px;
     font-size: xx-large;
     font-family: Georgia, 'Times New Roman', Times, serif;
     color: white;
-
 }
-/* "dawnTime", "midMorningTime", "midAfternoonTime", "earlyEveningTime", "midEveningTime", "midnightTime" */
+
+.cityCaption {
+    font-size: xx-large;
+    display: flex;
+    flex: 0 0 auto;
+    color: white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+
+.weatherContainer {
+    display: flex;
+    align-items: center;
+}
+
+
+.headerContainer {
+    display: flex;
+    justify-content: center;
+    /* padding: 25px; */
+}
+
+
+/* Background on Weather Component Based on Time of Day */
+.dawnTime {
+    background: whitesmoke;
+}
+
+.midMorningTime {
+    background: skyblue;
+}
+
+.midAfternoonTime {
+    background: salmon;
+}
+
+.earlyEveningTime {
+    background: blue;
+}
+
+.midEveningTime {
+    background: darkblue;
+}
 
 
