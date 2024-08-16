@@ -1,8 +1,8 @@
 .weatherHeader {
     background: linear-gradient(0deg,#d8eeee,#d8eeee 25%,#64b3c9 65%,#005986 90%,#005986);
     box-sizing: border-box;
-    /* width: auto; */
-    /* height: 1000px; */
+    /* width: 1500px; */
+    height: 1000px;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -28,6 +28,8 @@
     font-size: xx-large;
     text-align: center;
     color: white;
+    border-style: solid;
+    border-color: black;
     /* border: 2px solid linear-gradient(0deg ,#005986 90%,#005986); */
 }
 
@@ -37,6 +39,8 @@
     width: 50px;
     height: 50px;
     flex: 0 0 auto;
+    border-style: solid;
+    border-color: black;
     /* border: 2px solid linear-gradient(0deg ,#005986 90%,#005986); */
     background: linear-gradient(0deg ,#005986 90%,#005986);
 }
@@ -56,7 +60,7 @@
     height: 700px;
     width: 300px;
     display: flex;
-    flex: 0 0 auto;
+    flex: 0 1 auto;
     background: linear-gradient(0deg,#64b3c9 65%,#005986 90%,#005986);
     /* border-width: 10px;
     border-color: black; */
@@ -86,6 +90,8 @@
 .weatherContainer {
     display: flex;
     align-items: center;
+    justify-content: center;
+    gap: 5px;
 }
 
 
