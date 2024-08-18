@@ -3,6 +3,7 @@ import React from 'react';
 // import ReactDOM from 'react-dom/client';
 import './styles.css';
 
+
 export default function App () {
   //API KEYS
   //GET WEATHER FROM SEARCHING UP
@@ -23,17 +24,24 @@ export default function App () {
   const backgroundClassesArr = ["dawnTime", "midMorningTime", "midAfternoonTime", "earlyEveningTime", "midEveningTime", "midnightTime"];
   const [cityWeatherArr, updateCityWeatherArr] = useState([]);
   const [canSearch, setCanSearch] = useState(false);
-
-
+  const [canSearchByButton, setCanSearchByButton] = useState(true);
+  const [canSearchByEnter, setCanSearchByEnter] = useState(false);
+  
   useEffect(() => {
     if (canSearch){
       handleSearch();
+      setCanSearch(false);
     }
   });
+  
+  // useEffect(() => {
+  //   document.addEventListener("keypress", (e) => {
+  //     if (e.key === "Enter") {
+  //       setCanSearch(true);
 
-  useEffect(() => {
-    setCanSearch(false);
-  });
+  //     }
+  //   } );
+  // }, [])
 
   function deleteComponent(componentID) {
     const newArr = cityWeatherArr.filter((item) => (componentID !== item.id));
@@ -46,7 +54,7 @@ export default function App () {
         <div className = "headerContainer">
           <div className = "headerInfo">
             <p className = "cityCaption">City: </p>
-            <input type = "text" value = {inputVal} className = "searchBox" onChange={handleInputValue}/>
+            <input type = "text" value = {inputVal} className = "searchBox" onChange={handleInputValue} placeholder="Search City"/>
             <button onClick = {() => {setCanSearch(true)}} className = "getWeatherButton">{`🔍`}</button>
           </div>
         </div>
@@ -56,6 +64,9 @@ export default function App () {
         {cityWeatherArr.map(weatherComponentInfo => {
           return (
           <div key = {weatherComponentInfo.id} className = {`weatherInfo ${weatherComponentInfo.currentTimeZone}`}>
+            <div className = "deleteButtonContainer">
+              <button onClick = {() => deleteComponent(weatherComponentInfo.id)} className = "deleteButton">Delete</button>
+            </div>
             <div className = "weatherStatsInfo">
               <p className = "overallWeather">Overall: {weatherComponentInfo.weatherFeeling}</p>
               <p className = "cityName">City: {weatherComponentInfo.city}</p>
@@ -63,9 +74,6 @@ export default function App () {
               <p className = "countryName">Country: {weatherComponentInfo.country}</p>
               <p className = "humidityLevels">Humidity: {weatherComponentInfo.totalHumidity}</p>
               <p className = "windspeedLevels">Wind: {weatherComponentInfo.totalWindSpeed}</p>
-            </div>
-            <div className = "deleteButtonContainer">
-              <button onClick = {() => deleteComponent(weatherComponentInfo.id)} className = "deleteButton">X</button>
             </div>
           </div>
           ) 

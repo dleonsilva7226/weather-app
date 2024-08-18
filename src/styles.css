@@ -1,17 +1,28 @@
-.weatherHeader {
+body {
     background: linear-gradient(0deg,#d8eeee,#d8eeee 25%,#64b3c9 65%,#005986 90%,#005986);
+}
+
+
+.weatherHeader {
+    /* background: linear-gradient(0deg,#d8eeee,#d8eeee 25%,#64b3c9 65%,#005986 90%,#005986); */
     box-sizing: border-box;
     /* width: 1500px; */
-    height: 1000px;
+    /* width: auto; */
+    height: 1500px;
     padding: 20px;
+    /* margin-left: 0;
+    margin-right: 0px; */
     display: flex;
-    flex-direction: column;
-    gap: 100px;
-    /* align-items: flex-start; */
     /* flex-direction: column; */
+    gap: 50px;
+    /* align-items: flex-start; */
+    flex-direction: column;
     font-size: xx-large;
     color: white;
     font-family: Georgia, 'Times New Roman', Times, serif;
+    flex: 1;
+    /* text-align: end; */
+    /* flex-wrap: wrap; */
 }
 
 /* * {
@@ -26,7 +37,7 @@
     border-radius: 10px;
     width: 300px;
     height: 50px;
-    flex: 0 0 auto;
+    /* flex: 1; */
     /* font-weight: bold; */
     font-size: xx-large;
     text-align: center;
@@ -39,20 +50,31 @@
 
 .getWeatherButton {
     border-radius: 10px;
-    width: 50px;
-    height: 50px;
-    flex: 0 0 auto;
+    width: 56px;
+    height: 56px;
+    /* flex: 0 1 auto; */
     border-style: solid;
     border-color: black;
     /* border: 2px solid linear-gradient(0deg ,#005986 90%,#005986); */
-    background: linear-gradient(0deg ,#005986 90%,#005986);
+    background: #005986;
 }
+
+.getWeatherButton:hover {
+    filter: brightness(175%);
+    transition: 0.1s;
+}
+
+/* .deleteButton:hover {
+    background-color:#FF474C;
+    color: white;
+    transition: 0.7s;
+} */
 
 .headerInfo {
     /* padding: 50px; */
     display: flex;
     gap: 30px;
-    align-items: baseline;
+    align-items: center;
     justify-content: center;
 }
 
@@ -71,11 +93,11 @@
     border-style: solid;
     border-color: black;
     border-width: 2px;
-    /* flex-direction: column; */
+    flex-direction: column;
     align-items: center;
     /* align-items: center;
     justify-content: ; */
-    gap: 5px;
+    gap: 20px;
     font-size: xx-large;
     font-family: Georgia, 'Times New Roman', Times, serif;
     color: white;
@@ -84,7 +106,7 @@
 .cityCaption {
     font-size: xx-large;
     display: flex;
-    flex: 0 0 auto;
+    /* flex: 0 0 auto; */
     color: white;
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
@@ -95,6 +117,7 @@
     align-items: center;
     justify-content: center;
     gap: 5px;
+    text-align: center;
 }
 
 
@@ -132,37 +155,51 @@
 
 .deleteButton {
     background-color: transparent;
-    border-radius: 50%;
+    border-radius: 15px;
     border-color: #FF474C;
     border-style: solid;
     color: #FF474C;
     display: flex;
     justify-content: center;
-    height: 40px;
-    width: 40px;
-    font-size: xx-large;
+    height: 30px;
+    width: 100px;
+    font-size: large;
     align-items: center;
+    /* flex: 1; */
+    /* justify-self: center; */
+    /* text-align: end; */
+    /* text-align:end; */
     /* float: right; */
 }
 
+
+.deleteButton:hover {
+    background-color:#FF474C;
+    color: white;
+    transition: 0.1s;
+}
 .deleteButtonContainer {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
+    
+    /* flex: 0 1 auto; */
+    /* margin-right: 0; */
+    /* flex: 1; */
+    /* width: 300px; */
+    justify-content: flex-end;
+    /* flex-direction: column; */
+    /* justify-content: flex-start; */
     /* align-items: flex-start; */
-    /* flex: 1 1 auto; */
+    /* flex: 1 0 auto; */
 }
 
 
 .weatherStatsInfo {
-    /* height: 00px;
-    width: 300px; */
+    /* height: 00px; */
+    width: 300px;
     display: flex;
     /* justify-content: flex-start; */
     align-items: center;
     flex-direction:column;
 
 }
-
-
-
