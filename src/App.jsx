@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import React from 'react';
 // import ReactDOM from 'react-dom/client';
 import './styles.css';
@@ -22,7 +22,18 @@ export default function App () {
   const [timeZone, setTimeZone] = useState('');
   const backgroundClassesArr = ["dawnTime", "midMorningTime", "midAfternoonTime", "earlyEveningTime", "midEveningTime", "midnightTime"];
   const [cityWeatherArr, updateCityWeatherArr] = useState([]);
+  const [canSearch, setCanSearch] = useState(false);
 
+
+  useEffect(() => {
+    if (canSearch){
+      handleSearch();
+    }
+  });
+
+  useEffect(() => {
+    setCanSearch(false);
+  });
 
   //Have the city also be identifiable by Country
   return (
@@ -31,7 +42,7 @@ export default function App () {
           <div className = "headerInfo">
             <p className = "cityCaption">City: </p>
             <input type = "text" value = {inputVal} className = "searchBox" onChange={handleInputValue}/>
-            <button onClick = {handleSearch} className = "getWeatherButton">{`🔍`}</button>
+            <button onClick = {() => {setCanSearch(true)}} className = "getWeatherButton">{`🔍`}</button>
           </div>
         </div>
 
@@ -57,11 +68,7 @@ export default function App () {
      </div>
   );
 
-  function handleExit () {
-    console.log("Exiting...");
-  }
-
-  function handleSearch () {
+  async function handleSearch () {
     setWeatherVal('');
     setCountryName('');
     setCityName('');
@@ -73,24 +80,39 @@ export default function App () {
     // getCurrentLocationWeather(); 
     //DO ABOVE LATER
     
-    //SOMETHING WRONG AND MAKE THE FUNCTION ASYNC
-    getSearchedWeather();
-    
-    if (cityWeatherArr.length < 4 ){
-      updateCityWeatherArr ((currentWeatherArr) => {
-        return [
-          ...currentWeatherArr, 
-          {id: crypto.randomUUID(), weather: weatherVal, country: countryName, 
-            city: cityName, weatherFeeling: overallWeather, totalHumidity: humidity, 
-            totalWindSpeed: windSpeed, currentTimeZone: timeZone}
-        ]
-      });
+    const weatherStats = await getSearchedWeather();
+    console.log(weatherStats)
+    if (weatherStats.length == 7 && weatherStats[0] !== ''  && weatherStats[1] !== ''  
+      && weatherStats[2] !== ''  && weatherStats[3] !== ''  
+      && weatherStats[4] !== ''  && weatherStats[5] !== ''
+      && weatherStats[6] !== '') {
+
+      if (cityWeatherArr.length < 4 ){
+        updateCityWeatherArr ((currentWeatherArr) => {
+          return [
+            ...currentWeatherArr, 
+            {id: crypto.randomUUID(), weather: weatherStats[0], country: weatherStats[1], 
+              city: weatherStats[2], weatherFeeling: weatherStats[3], totalHumidity: weatherStats[4], 
+              totalWindSpeed: weatherStats[5], currentTimeZone: weatherStats[6]}
+          ]
+        });
+      }
+
     }
+
+    // setCanSearch(false);
+
     //SOMETHING WRONG AND MAKE THE FUNCTION ABOVE ASYNC
 
     console.log("The Array: " + cityWeatherArr);
-
+    
   }
+
+  function handleExit () {
+    console.log("Exiting...");
+  }
+
+
 
   //Gets Current Weather of the Location You Are At
   async function error (err) {
@@ -135,19 +157,26 @@ export default function App () {
 
 
 
-  //FUNCTION NOT RENDERING HERE CORRECTLY. CHECK WHAT'S WRONG. POSSIBLY THE USE STATE NEEDING TO AWAIT
+  //FUNCTION NOT RENDERING HERE CORRECTLY. CHECK WHAT'S WRONG. POSSIBLY THE USE STATE NEEDING TO AWAIT. FIGURE THAT OUT
   async function getSearchedWeather() {
     try {
     let queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${inputVal}&appid=${weatherAPIKey}&units=imperial`;
-    const weatherResult = await fetchData(queryURL);
+    const weatherStats = await fetchData(queryURL);
     // console.log(weatherResult);
-    if (weatherResult !== undefined) {
-      setWeatherVal(weatherResult + " F");
-      return "Promise Completed";
-
+    if (weatherStats !== undefined) {
+      setWeatherVal(weatherStats[0]);
+      // console.log(weatherStats[1]);
+      setCountryName(weatherStats[1]);
+      setCityName(weatherStats[2]);
+      setOverallWeather(weatherStats[3]);
+      setHumidity(weatherStats[4]);
+      setWindSpeed(weatherStats[5]);
+      setTimeZone(weatherStats[6]);
+      return weatherStats;
+      
     } else {
       console.log("No Results Found");
-      return "Promise Rejected"
+      return [];
     }
   } catch (error) {
     console.error("Not Good");
@@ -171,20 +200,15 @@ export default function App () {
       console.log(data);
       console.log();
       console.log(data.main.temp);
-      // let fahrenheitTemp = (data.main.temp - 273.15) * 9/5 + 32;
-      setCountryName(data.sys.country);
-      setCityName(data.name);
-      setOverallWeather(data.weather[0].main);
-      setHumidity(data.main.humidity + "%");
-      setWindSpeed(data.wind.speed + " mph");
-      setTimeBackground(data);
-      return Math.round(data.main.temp);
+      return [Math.round(data.main.feels_like) + "F", data.sys.country, data.name, 
+        data.weather[0].main, data.main.humidity + "%",
+        data.wind.speed + " mph", getTimeBackground(data)];
     } catch (error) {
       console.error(`Error: ${error}`);
     }
   }
 
-  function setTimeBackground(data) {
+  function getTimeBackground(data) {
     const now = new Date();
     let utcHours = now.getUTCHours();
     console.log(utcHours);
@@ -199,17 +223,17 @@ export default function App () {
     }
     console.log("Current Hour: " + currentHour);
     if (currentHour >= 18 && currentHour <= 20) {
-      setTimeZone(backgroundClassesArr[3]);
+      return backgroundClassesArr[3];
     } else if (currentHour >= 21 && currentHour <= 23) {
-      setTimeZone(backgroundClassesArr[4]);
+      return backgroundClassesArr[4];
     } else if (currentHour >= 0 && currentHour <= 5) {
-      setTimeZone(backgroundClassesArr[5]);
+      return backgroundClassesArr[5];
     } else if (currentHour >= 6 && currentHour <= 7) {
-      setTimeZone(backgroundClassesArr[0]);
+      return backgroundClassesArr[0];
     } else if (currentHour >= 8 && currentHour <= 11) {
-      setTimeZone(backgroundClassesArr[1]);
+      return backgroundClassesArr[1];
     } else if (currentHour >= 12 && currentHour <= 17) {
-      setTimeZone(backgroundClassesArr[2]);
+      return backgroundClassesArr[2];
     }
 
     // console.log(utcString);
