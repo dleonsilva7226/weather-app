@@ -9,6 +9,9 @@
     gap: 100px;
     /* align-items: flex-start; */
     /* flex-direction: column; */
+    font-size: xx-large;
+    color: white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 /* * {
@@ -68,7 +71,7 @@
     border-style: solid;
     border-color: black;
     border-width: 2px;
-    flex-direction: column;
+    /* flex-direction: column; */
     align-items: center;
     /* align-items: center;
     justify-content: ; */
@@ -126,5 +129,40 @@
 .midnightTime {
     background: #222021;
 }
+
+.deleteButton {
+    background-color: transparent;
+    border-radius: 50%;
+    border-color: #FF474C;
+    border-style: solid;
+    color: #FF474C;
+    display: flex;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    font-size: xx-large;
+    align-items: center;
+    /* float: right; */
+}
+
+.deleteButtonContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* align-items: flex-start; */
+    /* flex: 1 1 auto; */
+}
+
+
+.weatherStatsInfo {
+    /* height: 00px;
+    width: 300px; */
+    display: flex;
+    /* justify-content: flex-start; */
+    align-items: center;
+    flex-direction:column;
+
+}
+
 
 

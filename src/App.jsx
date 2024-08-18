@@ -40,11 +40,6 @@ export default function App () {
     updateCityWeatherArr(newArr);
   }
 
-  function handleDelete(currentWeatherComponent) {
-  }
-
-
-
   //Have the city also be identifiable by Country
   return (
       <div className = "weatherHeader">
@@ -61,13 +56,17 @@ export default function App () {
         {cityWeatherArr.map(weatherComponentInfo => {
           return (
           <div key = {weatherComponentInfo.id} className = {`weatherInfo ${weatherComponentInfo.currentTimeZone}`}>
-            <button onClick = {() => deleteComponent(weatherComponentInfo.id)} className = "deleteButton">Exit</button>
-            <p className = "overallWeather">Overall: {weatherComponentInfo.weatherFeeling}</p>
-            <p className = "cityName">City: {weatherComponentInfo.city}</p>
-            <p className = "cityWeather">Weather: {weatherComponentInfo.weather}</p>
-            <p className = "countryName">Country: {weatherComponentInfo.country}</p>
-            <p className = "humidityLevels">Humidity: {weatherComponentInfo.totalHumidity}</p>
-            <p className = "windspeedLevels">Wind: {weatherComponentInfo.totalWindSpeed}</p>
+            <div className = "weatherStatsInfo">
+              <p className = "overallWeather">Overall: {weatherComponentInfo.weatherFeeling}</p>
+              <p className = "cityName">City: {weatherComponentInfo.city}</p>
+              <p className = "cityWeather">Weather: {weatherComponentInfo.weather}</p>
+              <p className = "countryName">Country: {weatherComponentInfo.country}</p>
+              <p className = "humidityLevels">Humidity: {weatherComponentInfo.totalHumidity}</p>
+              <p className = "windspeedLevels">Wind: {weatherComponentInfo.totalWindSpeed}</p>
+            </div>
+            <div className = "deleteButtonContainer">
+              <button onClick = {() => deleteComponent(weatherComponentInfo.id)} className = "deleteButton">X</button>
+            </div>
           </div>
           ) 
         }
