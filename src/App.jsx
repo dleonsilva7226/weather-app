@@ -35,6 +35,16 @@ export default function App () {
     setCanSearch(false);
   });
 
+  function deleteComponent(componentID) {
+    const newArr = cityWeatherArr.filter((item) => (componentID !== item.id));
+    updateCityWeatherArr(newArr);
+  }
+
+  function handleDelete(currentWeatherComponent) {
+  }
+
+
+
   //Have the city also be identifiable by Country
   return (
       <div className = "weatherHeader">
@@ -47,11 +57,11 @@ export default function App () {
         </div>
 
       <div className="weatherContainer"> 
-
+        {cityWeatherArr.length === 0 && "Try Searching for Something!"}
         {cityWeatherArr.map(weatherComponentInfo => {
           return (
           <div key = {weatherComponentInfo.id} className = {`weatherInfo ${weatherComponentInfo.currentTimeZone}`}>
-            <button onClick = {handleExit} className = "deleteButton">Exit</button>
+            <button onClick = {() => deleteComponent(weatherComponentInfo.id)} className = "deleteButton">Exit</button>
             <p className = "overallWeather">Overall: {weatherComponentInfo.weatherFeeling}</p>
             <p className = "cityName">City: {weatherComponentInfo.city}</p>
             <p className = "cityWeather">Weather: {weatherComponentInfo.weather}</p>
@@ -61,9 +71,7 @@ export default function App () {
           </div>
           ) 
         }
-
         )}
-
        </div>
      </div>
   );
@@ -84,11 +92,11 @@ export default function App () {
     console.log(weatherStats)
     if (weatherStats.length == 7 && weatherStats[0] !== ''  && weatherStats[1] !== ''  
       && weatherStats[2] !== ''  && weatherStats[3] !== ''  
-      && weatherStats[4] !== ''  && weatherStats[5] !== ''
-      && weatherStats[6] !== '') {
+      && weatherStats[4] !== ''  && weatherStats[5] !== '') {
 
       if (cityWeatherArr.length < 4 ){
         updateCityWeatherArr ((currentWeatherArr) => {
+
           return [
             ...currentWeatherArr, 
             {id: crypto.randomUUID(), weather: weatherStats[0], country: weatherStats[1], 
@@ -108,26 +116,26 @@ export default function App () {
     
   }
 
-  function handleExit () {
-    console.log("Exiting...");
-  }
 
 
 
   //Gets Current Weather of the Location You Are At
-  async function error (err) {
-    console.warn(`(ERROR ${err.code}): ${err.message}`);
-  }
+  // async function error (err) {
+  //   console.warn(`(ERROR ${err.code}): ${err.message}`);
+  // }
   
-  async function success(pos) {
-    const crds = pos.coords;
-    const latitude = await crds.latitude;
-    const longitude = await crds.longitude;
-    setLatitudeVal(latitude);
-    setLongitudeVal(longitude);
-    console.log(`${latitude}, ${longitude}`);
-    console.log(`${currentLatitudeVal}, ${currentLongitudeVal}`);
-  }
+  // async function success(pos) {
+  //   const crds = pos.coords;
+  //   const latitude = await crds.latitude;
+  //   const longitude = await crds.longitude;
+  //   setLatitudeVal(latitude);
+  //   setLongitudeVal(longitude);
+  //   console.log(`${latitude}, ${longitude}`);
+  //   console.log(`${currentLatitudeVal}, ${currentLongitudeVal}`);
+  // }
+
+
+
 
 
   //SOMETHING IS WRONG HERE BELOW. CHECK IT OUT: Location takes a bit of time to get. Erase the try statement 
@@ -200,7 +208,7 @@ export default function App () {
       console.log(data);
       console.log();
       console.log(data.main.temp);
-      return [Math.round(data.main.feels_like) + "F", data.sys.country, data.name, 
+      return [Math.round(data.main.feels_like) + " F", data.sys.country, data.name, 
         data.weather[0].main, data.main.humidity + "%",
         data.wind.speed + " mph", getTimeBackground(data)];
     } catch (error) {
