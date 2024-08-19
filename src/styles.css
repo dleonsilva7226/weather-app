@@ -130,27 +130,34 @@ body {
 
 /* Background on Weather Component Based on Time of Day */
 .dawnTime {
-    background: darkorange;
+    background: linear-gradient(180deg, #FF9A8B 0%, #FFD1BA 30%, #FFEEAD 60%, #B4E1FF 100%);
+    color: #333333;
 }
 
 .midMorningTime {
-    background: skyblue;
+    background: linear-gradient(180deg, #FFFAE3 0%, #FFF5D4 50%, #D1E8E2 100%);
+    color: #333333;
+
 }
 
 .midAfternoonTime {
-    background: lightblue;
+    background: linear-gradient(180deg, #00BFFF 0%, #87CEFA 50%, #F5F5F5 100%);
+    color: #333333;
 }
 
 .earlyEveningTime {
-    background: #294966;
+    background: linear-gradient(180deg, #FF8C00 0%, #FF5E62 30%, #3A1C71 70%, #2B2D42 100%);
 }
 
 .midEveningTime {
-    background: #1C2951;
+    background: linear-gradient(180deg, #4A4A8C 0%, #2C3E50 40%, #1F2A38 70%, #0A0F1C 100%);
+
 } 
 
 .midnightTime {
-    background: #222021;
+    background: linear-gradient(180deg, #020024 0%, #090979 35%, #0c1445 70%, #021B79 100%);
+
+
 }
 
 .deleteButton {
