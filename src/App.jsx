@@ -26,7 +26,12 @@ export default function App () {
   const [canSearch, setCanSearch] = useState(false);
   const [canSearchByButton, setCanSearchByButton] = useState(true);
   const [canSearchByEnter, setCanSearchByEnter] = useState(false);
+  const [weatherLocInfoArr, setWeatherLocInfoArr] = useState([]);
+  /*Make a countrycode **ARRAY OR MAP HERE** so you can 
+  search for countries by its full name or Country Code*/
   
+
+  //Searches on Every Render of the Page
   useEffect(() => {
     if (canSearch){
       handleSearch();
@@ -34,14 +39,6 @@ export default function App () {
     }
   });
   
-  // useEffect(() => {
-  //   document.addEventListener("keypress", (e) => {
-  //     if (e.key === "Enter") {
-  //       setCanSearch(true);
-
-  //     }
-  //   } );
-  // }, [])
 
   function deleteComponent(componentID) {
     const newArr = cityWeatherArr.filter((item) => (componentID !== item.id));
@@ -51,16 +48,19 @@ export default function App () {
   //Have the city also be identifiable by Country
   return (
       <div className = "weatherHeader">
-        <div className = "headerContainer">
-          <div className = "headerInfo">
-            <p className = "cityCaption">City: </p>
-            <input type = "text" value = {inputVal} className = "searchBox" onChange={handleInputValue} placeholder="Search City"/>
-            <button onClick = {() => {setCanSearch(true)}} className = "getWeatherButton">{`🔍`}</button>
+        <div className = "titleAndHeaderContainer">
+          <p className = "titleLogo"> ⛅ SkyLens ⛅ </p>
+          <div className = "headerContainer">
+            <div className = "headerInfo">
+              <p className = "cityCaption">City: </p>
+              <input type = "text" value = {inputVal} className = "searchBox" onChange={handleInputValue} placeholder="Search City"/>
+              <button onClick = {() => {setCanSearch(true)}} className = "getWeatherButton">{`🔍`}</button>
+            </div>
           </div>
         </div>
 
       <div className="weatherContainer"> 
-        {cityWeatherArr.length === 0 && "Try Searching for Something!"}
+        {cityWeatherArr.length === 0 && "Try Searching For A Place!"}
         {cityWeatherArr.map(weatherComponentInfo => {
           return (
           <div key = {weatherComponentInfo.id} className = {`weatherInfo ${weatherComponentInfo.currentTimeZone}`}>
@@ -95,9 +95,10 @@ export default function App () {
     // getCurrentLocationWeather(); 
     //DO ABOVE LATER
     
+    
     const weatherStats = await getSearchedWeather();
-    console.log(weatherStats)
-    if (weatherStats.length == 7 && weatherStats[0] !== ''  && weatherStats[1] !== ''  
+    console.log(weatherStats);
+    if (weatherStats !== undefined && weatherStats.length == 7 && weatherStats[0] !== ''  && weatherStats[1] !== ''  
       && weatherStats[2] !== ''  && weatherStats[3] !== ''  
       && weatherStats[4] !== ''  && weatherStats[5] !== '') {
 
@@ -113,14 +114,7 @@ export default function App () {
         });
       }
 
-    }
-
-    // setCanSearch(false);
-
-    //SOMETHING WRONG AND MAKE THE FUNCTION ABOVE ASYNC
-
-    console.log("The Array: " + cityWeatherArr);
-    
+    }    
   }
 
 
@@ -173,14 +167,28 @@ export default function App () {
 
 
   //FUNCTION NOT RENDERING HERE CORRECTLY. CHECK WHAT'S WRONG. POSSIBLY THE USE STATE NEEDING TO AWAIT. FIGURE THAT OUT
+  
   async function getSearchedWeather() {
     try {
-    let queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${inputVal}&appid=${weatherAPIKey}&units=imperial`;
+    let queryURL = "";
+    if (!inputVal.includes(",")) {
+      queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${inputVal}&appid=${weatherAPIKey}&units=imperial`;
+    } 
+    else {
+      let inputString = inputVal;
+      inputString.trim();
+      let infoArr = inputString.split(",");
+      infoArr[0] = infoArr[0].trim();
+      if (infoArr.length <= 2) {
+        infoArr[1] = infoArr[1].trim();
+        queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${infoArr[0]},${infoArr[1]}&appid=${weatherAPIKey}&units=imperial`;
+      } else {
+        queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${infoArr[0]}&appid=${weatherAPIKey}&units=imperial`;
+      }       
+    }
     const weatherStats = await fetchData(queryURL);
-    // console.log(weatherResult);
     if (weatherStats !== undefined) {
       setWeatherVal(weatherStats[0]);
-      // console.log(weatherStats[1]);
       setCountryName(weatherStats[1]);
       setCityName(weatherStats[2]);
       setOverallWeather(weatherStats[3]);
@@ -194,7 +202,7 @@ export default function App () {
       return [];
     }
   } catch (error) {
-    console.error("Not Good");
+    console.error("Invalid Location!");
   }
     
   }
@@ -215,7 +223,7 @@ export default function App () {
       console.log(data);
       console.log();
       console.log(data.main.temp);
-      return [Math.round(data.main.feels_like) + " F", data.sys.country, data.name, 
+      return [Math.round(data.main.temp) + " F", data.sys.country, data.name, 
         data.weather[0].main, data.main.humidity + "%",
         data.wind.speed + " mph", getTimeBackground(data)];
     } catch (error) {
@@ -251,7 +259,6 @@ export default function App () {
       return backgroundClassesArr[2];
     }
 
-    // console.log(utcString);
   }
 
 }
