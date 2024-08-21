@@ -27,6 +27,7 @@ export default function App () {
   const [canSearchByButton, setCanSearchByButton] = useState(true);
   const [canSearchByEnter, setCanSearchByEnter] = useState(false);
   const [weatherLocInfoArr, setWeatherLocInfoArr] = useState([]);
+  const [currentWeatherLogo, setCurrentWeatherLogo] = useState('');
   // Country Code Map Below
   const countryMap = new Map([
     ["afghanistan", "AF"],
@@ -265,12 +266,15 @@ export default function App () {
               <button onClick = {() => deleteComponent(weatherComponentInfo.id)} className = "deleteButton">Delete</button>
             </div>
             <div className = "weatherStatsInfo">
-              <p className = "overallWeather">{weatherComponentInfo.weatherFeeling}</p>
-              <p className = "cityName">City: {weatherComponentInfo.city}</p>
-              <p className = "cityWeather">Weather: {weatherComponentInfo.weather}</p>
-              <p className = "countryName">Country: {weatherComponentInfo.country}</p>
+              <p className = "locInfo">{weatherComponentInfo.city}, {weatherComponentInfo.country}</p>
+              <div className = "overallWeatherContainer">
+                <img src= {weatherComponentInfo.tempLogo} alt="Current Weather" width="150" height="150"/>
+                <p className = "overallWeather">{weatherComponentInfo.weatherFeeling}</p>
+              </div>
+              <p className = "cityWeather">Temperature: {weatherComponentInfo.weather}</p>  
               <p className = "humidityLevels">Humidity: {weatherComponentInfo.totalHumidity}</p>
               <p className = "windspeedLevels">Wind: {weatherComponentInfo.totalWindSpeed}</p>
+              {/* <p className = "precipitationLevels">Precipitation: {weatherComponentInfo.totalWindSpeed}</p> */}
             </div>
           </div>
           ) 
@@ -288,12 +292,13 @@ export default function App () {
     setHumidity('');
     setWindSpeed('');
     setTimeZone('');
+    setCurrentWeatherLogo(``);
     //DO THIS LATER
     // getCurrentLocationWeather(); 
     //DO ABOVE LATER
     const weatherStats = await getSearchedWeather();
     console.log(weatherStats);
-    if (weatherStats !== undefined && weatherStats.length == 7 && weatherStats[0] !== ''  && weatherStats[1] !== ''  
+    if (weatherStats !== undefined && weatherStats.length == 8 && weatherStats[0] !== ''  && weatherStats[1] !== ''  
       && weatherStats[2] !== ''  && weatherStats[3] !== ''  
       && weatherStats[4] !== ''  && weatherStats[5] !== '') {
 
@@ -304,7 +309,7 @@ export default function App () {
             ...currentWeatherArr, 
             {id: crypto.randomUUID(), weather: weatherStats[0], country: weatherStats[1], 
               city: weatherStats[2], weatherFeeling: weatherStats[3], totalHumidity: weatherStats[4], 
-              totalWindSpeed: weatherStats[5], currentTimeZone: weatherStats[6]}
+              totalWindSpeed: weatherStats[5], currentTimeZone: weatherStats[6], tempLogo: weatherStats[7], precipitation: weatherStats[8]}
           ]
         });
       }
@@ -396,6 +401,8 @@ export default function App () {
       setHumidity(weatherStats[4]);
       setWindSpeed(weatherStats[5]);
       setTimeZone(weatherStats[6]);
+      setCurrentWeatherLogo(weatherStats[7]);
+      
       return weatherStats;
       
     } else {
@@ -420,13 +427,15 @@ export default function App () {
       if (!response.ok) {
         throw new Error("Invalid Place");
       }
+      
       const data = await response.json();
+      const weatherLogo = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
       console.log(data);
       console.log();
       console.log(data.main.temp);
       return [Math.round(data.main.temp) + " F", data.sys.country, data.name, 
         data.weather[0].main, data.main.humidity + "%",
-        data.wind.speed + " mph", getTimeBackground(data)];
+        data.wind.speed + " mph", getTimeBackground(data), weatherLogo];
     } catch (error) {
       console.error(`Error: ${error}`);
     }
