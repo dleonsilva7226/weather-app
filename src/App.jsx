@@ -5,16 +5,14 @@ import './styles.css';
 
 
 export default function App () {
-  //API KEYS
-  //GET WEATHER FROM SEARCHING UP
+  //API KEY
   const weatherAPIKey = "391cbb4a58a8cc222403d449bb858880";
-  // const defaultQueryURL = `https://api.openweathermap.org/data/2.5/weather?q=London&appid=${weatherAPIKey}`;
+
+
   const [inputVal, setInputVal] = useState('');
   const [weatherVal, setWeatherVal] = useState('');
   const [countryName, setCountryName] = useState('');
-  // const [weatherAtLocationVal, setWeatherAtLocationVal] = useState('');
   const [cityName, setCityName] = useState('');
-  // const [handledLocationRequestVal, setHandledLocationRequestVal] = useState('');
   const [currentLatitudeVal, setLatitudeVal] = useState('');
   const [currentLongitudeVal, setLongitudeVal] = useState('');
   const [overallWeather, setOverallWeather] = useState('');
@@ -24,11 +22,9 @@ export default function App () {
   const backgroundClassesArr = ["dawnTime", "midMorningTime", "midAfternoonTime", "earlyEveningTime", "midEveningTime", "midnightTime"];
   const [cityWeatherArr, updateCityWeatherArr] = useState([]);
   const [canSearch, setCanSearch] = useState(false);
-  const [canSearchByButton, setCanSearchByButton] = useState(true);
-  const [canSearchByEnter, setCanSearchByEnter] = useState(false);
   const [weatherLocInfoArr, setWeatherLocInfoArr] = useState([]);
   const [currentWeatherLogo, setCurrentWeatherLogo] = useState('');
-  // Country Code Map Below
+  // Country Code Map Below (with territories included)
   const countryMap = new Map([
     ["afghanistan", "AF"],
     ["albania", "AL"],
@@ -224,12 +220,46 @@ export default function App () {
     ["vietnam", "VN"],
     ["yemen", "YE"],
     ["zambia", "ZM"],
-    ["zimbabwe", "ZW"]
+    ["zimbabwe", "ZW"],
+    //territories below
+    ["american samoa", "AS"],
+    ["anguilla", "AI"],
+    ["aruba", "AW"],
+    ["ascension island", "AC"],
+    ["bermuda", "BM"],
+    ["british virgin islands", "VG"],
+    ["christmas island", "CX"],
+    ["cocos keeling islands", "CC"],
+    ["cook islands", "CK"],
+    ["faroe islands", "FO"],
+    ["french polynesia", "PF"],
+    ["gibraltar", "GI"],
+    ["guadeloupe", "GP"],
+    ["guernsey", "GG"],
+    ["isle of man", "IM"],
+    ["jersey", "JE"],
+    ["montserrat", "MS"],
+    ["new caledonia", "NC"],
+    ["niue", "NU"],
+    ["norfolk island", "NF"],
+    ["northern mariana islands", "MP"],
+    ["palau", "PW"],
+    ["pitcairn islands", "PN"],
+    ["puerto rico", "PR"],
+    ["reunion", "RE"],
+    ["saint helena", "SH"],
+    ["saint pierre and miquelon", "PM"],
+    ["saint barthelemy", "BL"],
+    ["sint maarten", "SX"],
+    ["tokelau", "TK"],
+    ["turks and caicos islands", "TC"],
+    ["us virgin islands", "VI"],
+    ["wallis and futuna", "WF"]
 ]);
-  // Country Code Map Above
+  // Country Code Map Above (with territories included)
   
 
-  //Searches on Every Render of the Page
+  //Searches Every Time canSearch is true
   useEffect(() => {
     if (canSearch){
       handleSearch();
@@ -238,17 +268,18 @@ export default function App () {
   });
   
 
+  //Deletes Components When The Delete Button is Pressed
   function deleteComponent(componentID) {
     const newArr = cityWeatherArr.filter((item) => (componentID !== item.id));
     updateCityWeatherArr(newArr);
   }
 
-  //Have the city also be identifiable by Country
   return (
+
       <div className = "weatherHeader">
         <div className = "titleAndHeaderContainer">
           <p className = "titleLogo"> ⛅ SkyLens ⛅ </p>
-          <div className = "headerContainer">
+          <div className = "headerContainer"> {/*Header Box for Search Box and Button*/}
             <div className = "headerInfo">
               <p className = "cityCaption">City: </p>
               <input type = "text" value = {inputVal} className = "searchBox" onChange={handleInputValue} placeholder="Search City"/>
@@ -257,6 +288,7 @@ export default function App () {
           </div>
         </div>
 
+      {/*Component Weather Info Below*/}
       <div className="weatherContainer"> 
         {cityWeatherArr.length === 0 && "Try Searching For A Place!"}
         {cityWeatherArr.map(weatherComponentInfo => {
@@ -274,7 +306,6 @@ export default function App () {
               <p className = "cityWeather">Temperature: {weatherComponentInfo.weather}</p>  
               <p className = "humidityLevels">Humidity: {weatherComponentInfo.totalHumidity}</p>
               <p className = "windspeedLevels">Wind: {weatherComponentInfo.totalWindSpeed}</p>
-              {/* <p className = "precipitationLevels">Precipitation: {weatherComponentInfo.totalWindSpeed}</p> */}
             </div>
           </div>
           ) 
@@ -284,6 +315,10 @@ export default function App () {
      </div>
   );
 
+
+  /*Calls a Function to Get an Array of WeatherInfo and then Updates the Array
+    Of Components By Getting an Array of WeatherInfo. Only Modifies Array if All
+    Elements Of WeatherStats Contain Info*/
   async function handleSearch () {
     setWeatherVal('');
     setCountryName('');
@@ -292,15 +327,15 @@ export default function App () {
     setHumidity('');
     setWindSpeed('');
     setTimeZone('');
-    setCurrentWeatherLogo(``);
-    //DO THIS LATER
+    setCurrentWeatherLogo('');
+    //DO THIS LATER (Potentially)
     // getCurrentLocationWeather(); 
-    //DO ABOVE LATER
+    //DO ABOVE LATER (Potentially)
     const weatherStats = await getSearchedWeather();
     console.log(weatherStats);
     if (weatherStats !== undefined && weatherStats.length == 8 && weatherStats[0] !== ''  && weatherStats[1] !== ''  
       && weatherStats[2] !== ''  && weatherStats[3] !== ''  
-      && weatherStats[4] !== ''  && weatherStats[5] !== '') {
+      && weatherStats[4] !== ''  && weatherStats[5] !== '' && weatherStats[6] !== '' && weatherStats[7] !== '') {
 
       if (cityWeatherArr.length < 4 ){
         updateCityWeatherArr ((currentWeatherArr) => {
@@ -309,62 +344,20 @@ export default function App () {
             ...currentWeatherArr, 
             {id: crypto.randomUUID(), weather: weatherStats[0], country: weatherStats[1], 
               city: weatherStats[2], weatherFeeling: weatherStats[3], totalHumidity: weatherStats[4], 
-              totalWindSpeed: weatherStats[5], currentTimeZone: weatherStats[6], tempLogo: weatherStats[7], precipitation: weatherStats[8]}
+              totalWindSpeed: weatherStats[5], currentTimeZone: weatherStats[6], tempLogo: weatherStats[7]}
           ]
         });
       }
 
     }    
   }
-
-  //Gets Current Weather of the Location You Are At
-  // async function error (err) {
-  //   console.warn(`(ERROR ${err.code}): ${err.message}`);
-  // }
   
-  // async function success(pos) {
-  //   const crds = pos.coords;
-  //   const latitude = await crds.latitude;
-  //   const longitude = await crds.longitude;
-  //   setLatitudeVal(latitude);
-  //   setLongitudeVal(longitude);
-  //   console.log(`${latitude}, ${longitude}`);
-  //   console.log(`${currentLatitudeVal}, ${currentLongitudeVal}`);
-  // }
-
-
-
-
-
-  //SOMETHING IS WRONG HERE BELOW. CHECK IT OUT: Location takes a bit of time to get. Erase the try statement 
-  //Look at Brocode course and attempt to solve the issue
-  // async function getCurrentLocationWeather () {
-    
-  //   // navigator.geolocation.getCurrentPosition(success, error);
-
-  //   // try {
-  //     // let queryURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${-0.1257}&lon=${51.5085}&appid=${weatherAPIKey}`;
-
-  //   let queryURL = `https://api.openweathermap.org/data/3.0/onecall?lat=${-0.1257}&lon=${51.5085}&appid=${weatherAPIKey}`;
-
-  //   const weatherResult = await fetchData(queryURL);
-  //   if (weatherResult !== undefined) {
-  //     setWeatherAtLocationVal(weatherResult + " F");
-  //   }
-  //   // }
-  //   // catch (error){
-  //   //   console.log("Not Good");
-  //   // }
-  // }
-
-  //SOMETHING IS WRONG HERE ABOVE. CHECK IT OUT: Location takes a bit of time to get. Erase the try statement 
-  //Look at Brocode course in JavaScript for promises and api fetching and attempt to solve the issue
-
-
-
-
-  //FUNCTION NOT RENDERING HERE CORRECTLY. CHECK WHAT'S WRONG. POSSIBLY THE USE STATE NEEDING TO AWAIT. FIGURE THAT OUT
-  
+  /*
+  Creates the queryURL to get info from OpenWeather API based on either:
+  - Name of the City
+  - Name of the City as Well as the City's Letter Country Code
+  - Name of the City as Well as the City and the full name of the Country 
+  */
   async function getSearchedWeather() {
     try {
     let queryURL = "";
@@ -392,6 +385,9 @@ export default function App () {
         queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${infoArr[0]}&appid=${weatherAPIKey}&units=imperial`;
       }       
     }
+    /*
+    Gets the weatherStats Data with API info
+    */
     const weatherStats = await fetchData(queryURL);
     if (weatherStats !== undefined) {
       setWeatherVal(weatherStats[0]);
@@ -402,7 +398,6 @@ export default function App () {
       setWindSpeed(weatherStats[5]);
       setTimeZone(weatherStats[6]);
       setCurrentWeatherLogo(weatherStats[7]);
-      
       return weatherStats;
       
     } else {
@@ -415,6 +410,8 @@ export default function App () {
     
   }
 
+
+  //Updates What is Shown in the Search Box
   function handleInputValue(event) {
     setInputVal(event.target.value);
   }
@@ -433,14 +430,19 @@ export default function App () {
       console.log(data);
       console.log();
       console.log(data.main.temp);
+      //Returns Info from API in an Array
       return [Math.round(data.main.temp) + " F", data.sys.country, data.name, 
         data.weather[0].main, data.main.humidity + "%",
-        data.wind.speed + " mph", getTimeBackground(data), weatherLogo];
+        Math.round(data.wind.speed) + " mph", getTimeBackground(data), weatherLogo];
     } catch (error) {
       console.error(`Error: ${error}`);
     }
   }
 
+
+  //Returns Current Time Of the Place Being Searched in the form of a String 
+  //That Represents the Name of a CSS Class to Style the Background
+  //Based on the Current Time of the Place.
   function getTimeBackground(data) {
     const now = new Date();
     let utcHours = now.getUTCHours();

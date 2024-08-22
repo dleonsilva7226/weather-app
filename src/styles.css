@@ -4,31 +4,17 @@ body {
 
 
 .weatherHeader {
-    /* background: linear-gradient(0deg,#d8eeee,#d8eeee 25%,#64b3c9 65%,#005986 90%,#005986); */
     box-sizing: border-box;
-    /* width: 1500px; */
-    /* width: auto; */
     height: 1500px;
     padding: 20px;
-    /* margin-left: 0;
-    margin-right: 0px; */
     display: flex;
-    /* flex-direction: column; */
-    /* align-items: flex-start; */
     flex-direction: column;
     font-size: xx-large;
     color: white;
     font-family: Georgia, 'Times New Roman', Times, serif;
     flex: 1;
-    /* text-align: end; */
-    /* flex-wrap: wrap; */
+    flex-wrap: wrap;
 }
-
-/* * {
-    background: linear-gradient(0deg,#d8eeee,#d8eeee 25%,#64b3c9 65%,#005986 90%,#005986);
-    box-sizing: border-box;
-    height: 500px;
-} */
 
 
 .searchBox {
@@ -36,14 +22,11 @@ body {
     border-radius: 10px;
     width: 300px;
     height: 50px;
-    /* flex: 1; */
-    /* font-weight: bold; */
     font-size: x-large;
     text-align: center;
     color: white;
     border-style: solid;
     border-color: black;
-    /* border: 2px solid linear-gradient(0deg ,#005986 90%,#005986); */
 }
 
 
@@ -51,10 +34,8 @@ body {
     border-radius: 10px;
     width: 56px;
     height: 56px;
-    /* flex: 0 1 auto; */
     border-style: solid;
     border-color: black;
-    /* border: 2px solid linear-gradient(0deg ,#005986 90%,#005986); */
     background: #005986;
 }
 
@@ -63,14 +44,8 @@ body {
     transition: 0.1s;
 }
 
-/* .deleteButton:hover {
-    background-color:#FF474C;
-    color: white;
-    transition: 0.7s;
-} */
 
 .headerInfo {
-    /* padding: 50px; */
     display: flex;
     gap: 50px;
     align-items: center;
@@ -80,22 +55,17 @@ body {
 
 .weatherInfo {
     padding: 20px;
-    /* width: 300px; */
     height: 700px;
     width: 300px;
     display: flex;
     flex: 0 1 auto;
     background: linear-gradient(0deg,#64b3c9 65%,#005986 90%,#005986);
-    /* border-width: 10px;
-    border-color: black; */
     border-radius: 15px;
     border-style: solid;
     border-color: black;
     border-width: 2px;
     flex-direction: column;
     align-items: center;
-    /* align-items: center;
-    justify-content: ; */
     gap: 30px;
     font-size: 25px;
     font-family: Georgia, 'Times New Roman', Times, serif;
@@ -105,7 +75,6 @@ body {
 .cityCaption {
     font-size: xx-large;
     display: flex;
-    /* flex: 0 0 auto; */
     color: white;
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
@@ -121,7 +90,6 @@ body {
     gap: 20px;
     justify-content: center;
     align-items: center;
-    /* flex: 1; */
     font-size: 35px;
 }
 
@@ -138,7 +106,6 @@ body {
 .headerContainer {
     display: flex;
     justify-content: center;
-    /* padding: 25px; */
 }
 
 
@@ -186,11 +153,6 @@ body {
     width: 100px;
     font-size: large;
     align-items: center;
-    /* flex: 1; */
-    /* justify-self: center; */
-    /* text-align: end; */
-    /* text-align:end; */
-    /* float: right; */
 }
 
 
@@ -202,24 +164,13 @@ body {
 .deleteButtonContainer {
     display: flex;
     justify-content: center;
-    
-    /* flex: 0 1 auto; */
-    /* margin-right: 0; */
-    /* flex: 1; */
-    /* width: 300px; */
     justify-content: flex-end;
-    /* flex-direction: column; */
-    /* justify-content: flex-start; */
-    /* align-items: flex-start; */
-    /* flex: 1 0 auto; */
 }
 
 
 .weatherStatsInfo {
-    /* height: 00px; */
     width: 300px;
     display: flex;
-    /* justify-content: flex-start; */
     align-items: center;
     flex-direction:column;
 
@@ -235,7 +186,6 @@ body {
 }
 
 .titleLogo {
-    /* text-decoration: underline; */
     color: #F1C40F;
     font-weight: bold;
     font-size: 2em;
