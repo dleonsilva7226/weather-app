@@ -1,12 +1,13 @@
 body {
     background: linear-gradient(0deg,#d8eeee,#d8eeee 25%,#64b3c9 65%,#005986 90%,#005986);
+    height: 2000px;
 }
 
 
 .weatherHeader {
     box-sizing: border-box;
     height: 1500px;
-    padding: 20px;
+    padding: 40px;
     display: flex;
     flex-direction: column;
     font-size: xx-large;
@@ -37,6 +38,7 @@ body {
     border-style: solid;
     border-color: black;
     background: #005986;
+    /* margin-rugh: 20px; */
 }
 
 .getWeatherButton:hover {
@@ -50,6 +52,8 @@ body {
     gap: 50px;
     align-items: center;
     justify-content: center;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 
@@ -100,6 +104,10 @@ body {
     justify-content: center;
     gap: 5px;
     text-align: center;
+    padding: 20px;
+    /* flex-wrap: wrap;
+    width:  */
+
 }
 
 
@@ -173,7 +181,6 @@ body {
     display: flex;
     align-items: center;
     flex-direction:column;
-
 }
 
 

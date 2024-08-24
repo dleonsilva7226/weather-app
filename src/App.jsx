@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import React from 'react';
 // import ReactDOM from 'react-dom/client';
 import './styles.css';
+// const { v4: uuidv4 } = require('uuid');
+import { v4 as uuidv4 } from 'uuid';
+
 
 
 export default function App () {
@@ -333,16 +336,17 @@ export default function App () {
     //DO ABOVE LATER (Potentially)
     const weatherStats = await getSearchedWeather();
     console.log(weatherStats);
+    let randomUUID = uuidv4();
     if (weatherStats !== undefined && weatherStats.length == 8 && weatherStats[0] !== ''  && weatherStats[1] !== ''  
       && weatherStats[2] !== ''  && weatherStats[3] !== ''  
       && weatherStats[4] !== ''  && weatherStats[5] !== '' && weatherStats[6] !== '' && weatherStats[7] !== '') {
-
       if (cityWeatherArr.length < 4 ){
         updateCityWeatherArr ((currentWeatherArr) => {
-
+          //ERROR HERE. LOOK AT IT AGAIN
+          {/*Error with the CryptoID.randomUUID Thing. Figure out Something else to put for a unique ID*/}
           return [
             ...currentWeatherArr, 
-            {id: crypto.randomUUID(), weather: weatherStats[0], country: weatherStats[1], 
+            {id: randomUUID, weather: weatherStats[0], country: weatherStats[1], 
               city: weatherStats[2], weatherFeeling: weatherStats[3], totalHumidity: weatherStats[4], 
               totalWindSpeed: weatherStats[5], currentTimeZone: weatherStats[6], tempLogo: weatherStats[7]}
           ]
