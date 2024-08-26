@@ -1,12 +1,12 @@
 body {
     background: linear-gradient(0deg,#d8eeee,#d8eeee 25%,#64b3c9 65%,#005986 90%,#005986);
-    height: 2000px;
+    min-height: 2000px;
 }
 
 
 .weatherHeader {
     box-sizing: border-box;
-    height: 1500px;
+    /* height: 1500px; */
     padding: 40px;
     display: flex;
     flex-direction: column;
@@ -95,6 +95,8 @@ body {
     justify-content: center;
     align-items: center;
     font-size: 35px;
+    /* flex-direction: column; */
+    /* flex-wrap: wrap; */
 }
 
 
@@ -102,12 +104,14 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 5px;
+    gap: 100px;
     text-align: center;
     padding: 20px;
-    /* flex-wrap: wrap;
-    width:  */
-
+    /* width: 1000px; */
+    flex-wrap: wrap;
+    flex: 1;
+    /* flex-direction: column; */
+    /* width:  */
 }
 
 

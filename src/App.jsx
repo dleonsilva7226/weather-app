@@ -278,7 +278,6 @@ export default function App () {
   }
 
   return (
-
       <div className = "weatherHeader">
         <div className = "titleAndHeaderContainer">
           <p className = "titleLogo"> ⛅ SkyLens ⛅ </p>
@@ -340,10 +339,8 @@ export default function App () {
     if (weatherStats !== undefined && weatherStats.length == 8 && weatherStats[0] !== ''  && weatherStats[1] !== ''  
       && weatherStats[2] !== ''  && weatherStats[3] !== ''  
       && weatherStats[4] !== ''  && weatherStats[5] !== '' && weatherStats[6] !== '' && weatherStats[7] !== '') {
-      if (cityWeatherArr.length < 4 ){
+      if (cityWeatherArr.length < 9){
         updateCityWeatherArr ((currentWeatherArr) => {
-          //ERROR HERE. LOOK AT IT AGAIN
-          {/*Error with the CryptoID.randomUUID Thing. Figure out Something else to put for a unique ID*/}
           return [
             ...currentWeatherArr, 
             {id: randomUUID, weather: weatherStats[0], country: weatherStats[1], 
