@@ -1,6 +1,6 @@
 # SkyLens
 
-Skylens is a weather application that provides real-time weather updates and forecasts. Built with HTML, CSS, JavaScript, and React, Skylens allows users to check the weather for multiple locations around the world simultaneously. The app offers a clean and intuitive user interface, featuring realistic gradient backgrounds that change according to the time of day. Whether you're planning your day or just checking the weather, Skylens gives you all the details you need at a glance.
+SkyLens is a weather application that provides real-time weather updates and forecasts. Built with HTML, CSS, JavaScript, and React, SkyLens allows users to check the weather for multiple locations around the world simultaneously. The app offers a clean and intuitive user interface, featuring realistic gradient backgrounds that change according to the time of day. Whether you're planning your day or just checking the weather, SkyLens gives you all the details you need at a glance.
 
 Features:
 -
@@ -19,7 +19,7 @@ Technologies Used:
 - OpenWeather API
 
 
-# How to Download and Run Skylens
+# How to Download and Run SkyLens
 
 Prerequisites:
 -
@@ -27,7 +27,7 @@ Prerequisites:
 Steps:
 - Clone the Repository:
   - Open your terminal or command prompt.
-  - Run the following command to clone the Skylens repository to your local machine:
+  - Run the following command to clone the SkyLens repository to your local machine:
       `git clone git@github.com:your-username/weather-app.git`
     - Replace `your-username` with the appropriate GitHub username if you're sharing your repo.
 
