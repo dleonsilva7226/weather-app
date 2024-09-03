@@ -29,10 +29,6 @@ Technologies Used:
 - OpenWeather API
 
 
-
-
-
-
 # How to Download and Run Skylens
 
 Prerequisites:
@@ -42,34 +38,23 @@ Steps:
 - Clone the Repository:
   - Open your terminal or command prompt.
   - Run the following command to clone the Skylens repository to your local machine:
-      `git clone https://github.com/your-username/skylens.git`
-    - Replace your-username with the appropriate GitHub username if you're sharing your repo.
+      `git clone git@github.com:your-username/weather-app.git`
+    - Replace `your-username` with the appropriate GitHub username if you're sharing your repo.
 
-Navigate to the Project Directory:
+Navigate to the project directory using the following command:
 -
+-`cd weather-app`
 
-Change into the project directory using the following command:
+To Install Dependencies:
 -
-Copy code
-cd skylens
-Install Dependencies:
-
-Run the following command to install all necessary dependencies:
--
-bash
-Copy code
-npm install
-This will download and install everything the app needs to run.
-Start the Development Server:
+- Run the following command to install all necessary dependencies: `npm install`
+- This will download and install everything the app needs to run.
 
 Once the dependencies are installed, start the development server with:
 -
-bash
-Copy code
-npm start
-The app will be compiled, and the server will start.
+- `npm run dev`
+- The app will be compiled, and the server will start.
 
-View the App:
+To View the App:
 - 
-- Open your web browser and go to http://localhost:3000.
-- Skylens should be running and accessible from your browser.
+- Click on the highlighted link shown after running `npm run dev`
