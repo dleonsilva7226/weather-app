@@ -43,7 +43,7 @@ Steps:
 
 Navigate to the project directory using the following command:
 -
--`cd weather-app`
+- `cd weather-app`
 
 To Install Dependencies:
 -
