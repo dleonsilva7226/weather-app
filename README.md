@@ -28,3 +28,48 @@ Technologies Used:
 - HTML/CSS
 - OpenWeather API
 
+
+
+
+
+
+# How to Download and Run Skylens
+
+Prerequisites:
+-
+- Node.js and npm: Make sure you have Node.js and npm installed. You can download them from Node.js official website.
+Steps:
+- Clone the Repository:
+  - Open your terminal or command prompt.
+  - Run the following command to clone the Skylens repository to your local machine:
+      `git clone https://github.com/your-username/skylens.git`
+    - Replace your-username with the appropriate GitHub username if you're sharing your repo.
+
+Navigate to the Project Directory:
+-
+
+Change into the project directory using the following command:
+-
+Copy code
+cd skylens
+Install Dependencies:
+
+Run the following command to install all necessary dependencies:
+-
+bash
+Copy code
+npm install
+This will download and install everything the app needs to run.
+Start the Development Server:
+
+Once the dependencies are installed, start the development server with:
+-
+bash
+Copy code
+npm start
+The app will be compiled, and the server will start.
+
+View the App:
+- 
+- Open your web browser and go to http://localhost:3000.
+- Skylens should be running and accessible from your browser.
